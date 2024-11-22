@@ -49,3 +49,19 @@ func FetchSubjectsForPapers(c *gin.Context) {
 
     c.JSON(200, gin.H{"subjects": subjects})
 }
+
+func FetchSubjectsForClasses(c *gin.Context) {
+   
+    db := config.GetDB()
+
+    var subjects []string
+
+    err := db.Table("classrooms").Select("DISTINCT subject").Pluck("subject", &subjects).Error
+
+    if err != nil {
+        c.JSON(500, gin.H{"error": "Failed to fetch subjects"})
+        return
+    }
+
+    c.JSON(200, gin.H{"subjects": subjects})
+}

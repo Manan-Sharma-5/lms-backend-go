@@ -18,6 +18,7 @@ func Routes(r* gin.Engine){
 	{
 		apiRouter.POST("/file-upload", file_upload.FileUpload)
 		apiRouter.POST("/previous-year-upload", file_upload.PreviousYearUpload)
+		apiRouter.POST("/upload-book", file_upload.BookRequest)
 		apiRouter.POST("/view-notes", fetchrequests.FetchNotes)
 		apiRouter.POST("/view-pyqs", fetchrequests.FetchPYQS)
 		apiRouter.POST("/create-class", classroom.CreateClass)
@@ -25,5 +26,7 @@ func Routes(r* gin.Engine){
 		apiRouter.POST("/fetch-class-subject", classroom.FetchClassBySubject)
 		apiRouter.POST("/fetch-subjects-notes", fetchrequests.FetchSubjectsForNotes)
 		apiRouter.POST("/fetch-subjects-pyqs", fetchrequests.FetchSubjectsForPapers)
+		apiRouter.POST("/fetch-subjects-class", fetchrequests.FetchSubjectsForClasses)
+		apiRouter.GET("/view-books", fetchrequests.ViewBooks)
 	}
 }
