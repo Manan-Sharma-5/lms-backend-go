@@ -22,8 +22,8 @@ A robust backend system for managing educational resources including notes, book
   - Integration with video conferencing platforms
   - User-specific classroom tracking
 ## 🛠️ Tech Stack
-- **Backend Framework**: Go with [Framework Name]
-- **Database**: [Database Name]
+- **Backend Framework**: Go
+- **Database**: PostgreSQL
 - **Storage**: AWS S3
 - **Authentication**: Custom implementation with secure cookies
 - **API Documentation**: Postman Collection
