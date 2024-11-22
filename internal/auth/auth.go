@@ -48,7 +48,7 @@ func SignUp(c *gin.Context) {
         return
     }
 
-	c.SetCookie("user_id", user.ID, 3600, "/", "172.16.165.162", false, true) // Adjust cookie parameters as needed
+	c.SetCookie("user_id", user.ID, 3600, "/", "localhost", false, true) // Adjust cookie parameters as needed
     c.JSON(http.StatusCreated, user)
 }
 
@@ -83,6 +83,6 @@ func SignIn(c *gin.Context) {
         return
     }
 
-	c.SetCookie("user_id", user.ID, 3600, "/", "172.16.165.162", false, true) // Adjust cookie parameters as needed
+	c.SetCookie("user_id", user.ID, 3600, "/", "localhost", false, true) // Adjust cookie parameters as needed
     c.JSON(http.StatusOK, user)
 }

@@ -60,6 +60,7 @@ type Classroom struct {
     Stream      string
     Subject     string
     Year        int
+    URL         string
     CreatedDate time.Time
     UserID      string     `gorm:"index"`
     User        User       `gorm:"foreignKey:UserID;references:ID"`

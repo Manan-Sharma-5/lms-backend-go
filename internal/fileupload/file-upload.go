@@ -48,7 +48,7 @@ func FileUpload(c *gin.Context) {
     svc := s3.New(sess)
 
     // Generate a pre-signed PUT URL for the client to upload the file
-    key := "notes/" + year + "/" + subjectCode + "/" + filename
+    key := "notes/" + year + "/" + subjectCode + "/" + filename + ".pdf"
     putReq, _ := svc.PutObjectRequest(&s3.PutObjectInput{
         Bucket: aws.String(bucket),
         Key:    aws.String(key),

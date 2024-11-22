@@ -23,7 +23,7 @@ func FetchNotes(c *gin.Context) {
 
 	// Create a slice to store the notes
 	var notes []models.Note
-	result := db.Where("year = ? AND subject = ?", requestBody.Year, requestBody.SubjectCode).Find(&notes)
+	result := db.Where("year = ? AND subject = ? AND status != ?", requestBody.Year, requestBody.SubjectCode, "pending").Find(&notes)
 
 	if result.Error != nil {
 		c.JSON(500, gin.H{"error": "Failed to fetch notes"})
