@@ -188,4 +188,4 @@ go run main.go
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 ## 📞 Support
-For support, email [your-email@example.com] or raise an issue in the repository.
+For support, raise an issue in the repository.
