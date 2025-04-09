@@ -24,6 +24,12 @@ func BookRequest(c *gin.Context) {
         return
     }
 
+    // Parse the request body
+
+    if err := c.BindJSON(&RequestBody); err != nil {
+        c.JSON(400, gin.H{"error": "Invalid request body"})
+        return
+    }
     // Create an AWS session
    
     db := config.GetDB()
@@ -43,6 +49,7 @@ func BookRequest(c *gin.Context) {
 
     // Return the PUT URL for uploading to the client
     c.JSON(200, gin.H{
-        "message": "File ready to be uploaded",
+        "message": "Successfully created book request",
+        "body": RequestBody,
     })
 }

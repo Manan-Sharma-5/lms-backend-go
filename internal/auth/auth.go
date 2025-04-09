@@ -6,10 +6,47 @@ import (
 	"net/http"
 	"time"
 
+	"errors"
+	"regexp"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
+
+func validatePassword(password string) error {
+	if len(password) < 8 || len(password) > 15 {
+		return errors.New("password must be between 8 and 15 characters long")
+	}
+
+	// Must contain at least one digit
+	if match, _ := regexp.MatchString(`[0-9]`, password); !match {
+		return errors.New("password must contain at least one digit")
+	}
+
+	// Must contain at least one uppercase letter
+	if match, _ := regexp.MatchString(`[A-Z]`, password); !match {
+		return errors.New("password must contain at least one uppercase letter")
+	}
+
+	// Must contain at least one lowercase letter
+	if match, _ := regexp.MatchString(`[a-z]`, password); !match {
+		return errors.New("password must contain at least one lowercase letter")
+	}
+
+	// Must contain at least one special character
+	if match, _ := regexp.MatchString(`[!@#\$%\^&\*\(\)\-\+=]`, password); !match {
+		return errors.New("password must contain at least one special character (!@#$%^&*()-+=)")
+	}
+
+	// Must not contain whitespace
+	if match, _ := regexp.MatchString(`\s`, password); match {
+		return errors.New("password must not contain any white spaces")
+	}
+
+	return nil
+}
+
 
 // SignUp registers a new user
 func SignUp(c *gin.Context) {
@@ -21,6 +58,11 @@ func SignUp(c *gin.Context) {
     }
     
     if err := c.ShouldBindJSON(&req); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    if err := validatePassword(req.Password); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }

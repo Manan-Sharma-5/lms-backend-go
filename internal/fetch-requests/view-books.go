@@ -12,12 +12,29 @@ func ViewBooks(c *gin.Context){
 
 	var books []models.Book
 
-	result := db.Find(&books)
+	// Fetching books with associated user data (including email)
+	result := db.Preload("User").Find(&books)
 
 	if result.Error != nil {
 		c.JSON(500, gin.H{"error": "Failed to fetch books"})
 		return
 	}
+	
+	var response []gin.H
+	for _, book := range books {
+		response = append(response, gin.H{
+			"book": gin.H{
+				"id":          book.ID,
+				"title":       book.Title,
+				"author":      book.Author,
+				"description": book.Description,
+				"price":       book.Price,
+				"image":       book.Image,
+				"status":      book.Status,
+			},
+			"user_email": book.User.Email, 
+		})
+	}
 
-	c.JSON(200, gin.H{"books": books})
+	c.JSON(200, gin.H{"books": response})
 }
